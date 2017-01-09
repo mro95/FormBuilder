@@ -1,0 +1,19 @@
+{
+  "name": "mro95/json-yaml-form-builder",
+  "description": "A JSON/YAML form builder",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Maarten Oosting",
+      "email": "mail@maartenoosting.nl"
+    }
+  ],
+  "require": {
+    "php": ">=7.0"
+  },
+  "autoload": {
+    "psr-0": {
+      "Mro95\\FormBuilder": "src/"
+    }
+  }
+}
