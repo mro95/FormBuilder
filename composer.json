@@ -9,7 +9,8 @@
     }
   ],
   "require": {
-    "php": ">=7.0"
+    "php": "^7.0",
+    "phpspec/phpspec": "~2.0"
   },
   "autoload": {
     "psr-0": {
