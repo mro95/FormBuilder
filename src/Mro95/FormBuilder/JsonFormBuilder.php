@@ -2,65 +2,39 @@
 
 class JsonFormBuilder extends FormBuilder
 {
-    private $json     = [];
     private $fileName = '';
-    private $formObject;
 
-    public function __construct(string $fileName, $load = true)
+    private $jsonArray = [];
+
+    public function __construct(string $filename, bool $load = true)
     {
-        $this->formObject = new Form();
-        $this->fileName   = $fileName;
+        parent::__construct();
+        $this->fileName = $filename;
         if ($load) {
-            $this->load();
+            $this->loadFile();
         }
     }
 
-    public function load()
+    private function loadFile()
     {
-        $content    = file_get_contents($this->fileName);
-        $this->json = json_decode($content, true);
-    }
-
-    private function addText($id, $input)
-    {
-        $input['name'] = trans($input['name']);
-        $input['required'] = ($input['validation']['required'] ?? false) === true;
-        $input['disabled'] = ($input['disabled'] ?? false) === true;
-        $input['value'] = null;
-        $validation = $input['validation'] ?? null;
-        $this->formObject->addValidationRule($id, $validation);
-        unset($input['validation']);
-        $this->formObject->addField($id, $input);
-    }
-
-    private function addRadio($id, $form)
-    {
-        $form['name'] = trans($form['name']);
-        $this->formObject->addField($id, $form);
-    }
-
-    private function addFieldset($id, $form)
-    {
-        $form['name'] = trans($form['name']);
-        $this->formObject->addField($id, $form);
+        $content = file_get_contents($this->fileName);
+        $this->jsonArray = json_decode($content, true);
     }
 
     public function build()
     {
-        dd($this->render($this->json['data']), $this->formObject);
+        $this->buildElements($this->jsonArray['data']);
     }
 
-    private function render($elements)
+    protected function buildElements($elements)
     {
         foreach ($elements as $id => $form) {
-            $type        = $form['type'];
-            $addFunction = "add" . ucfirst($type);
-            $this->$addFunction($id, $form);
+            $this->addField($id, $form);
         }
     }
 
-    public function getForm()
+    public function addField($id, $form)
     {
-        return $this->formObject;
+        $this->form->addField($id, $form);
     }
 }

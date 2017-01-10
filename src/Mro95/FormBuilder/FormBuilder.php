@@ -1,13 +1,28 @@
 <?php namespace Mro95\FormBuilder;
 
-abstract class FromBuilder
+abstract class FormBuilder implements FormBuilderInterface
 {
-    protected $form;
+    /** @var Form */
+    protected $form = null;
 
     public function __construct()
     {
         $this->form = new Form();
     }
 
-    abstract public function build();
+    /**
+     * @return Form
+     */
+    public function getForm(): Form
+    {
+        return $this->form;
+    }
+
+    /**
+     * @param Form $form
+     */
+    public function setForm($form)
+    {
+        $this->form = $form;
+    }
 }

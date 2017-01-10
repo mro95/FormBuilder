@@ -1,5 +1,5 @@
 <?php
-namespace Mro95\FormBuilder;
+namespace Mro95\FormBuilder\View;
 
 interface ViewInterface
 {

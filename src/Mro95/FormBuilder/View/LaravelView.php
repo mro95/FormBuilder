@@ -1,6 +1,6 @@
 <?php
 
-namespace Mro95\FormBuilder;
+namespace Mro95\FormBuilder\View;
 
 
 class LaravelView implements ViewInterface
