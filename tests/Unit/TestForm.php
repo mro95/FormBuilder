@@ -10,6 +10,6 @@ class TestForm extends TestCase
         $builder = new JsonFormBuilder('tests/test-form1.json');
         $director = new FormDirector();
         $form = $director->build($builder);
-        var_dump($form);
+        var_dump($form->toHtml());
     }
 }

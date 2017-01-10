@@ -1,5 +1,7 @@
 <?php namespace Mro95\FormBuilder;
 
+use Mro95\FormBuilder\FormElements\Text;
+
 class Form
 {
     private $fields = [];
@@ -21,7 +23,7 @@ class Form
     public function addField(string $id, array $field)
     {
         unset($field['validation']);
-        $this->fields[$id] = $field;
+        $this->fields[$id] = new Text($id, $field);
     }
 
     public function getFields()
@@ -34,6 +36,15 @@ class Form
         if(!empty($rule) && is_array($rule)) {
             $this->validation[$id] = $rule;
         }
+    }
+
+    public function toHtml()
+    {
+        $out = '';
+        foreach ($this->fields as $field) {
+            $out .= $field->toHtml();
+        }
+        return $out;
     }
 
 }
