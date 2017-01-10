@@ -1,0 +1,26 @@
+{
+  "data": {
+    "first_name": {
+      "type": "text",
+      "name": "firstname"
+    },
+    "street-nr": {
+      "type": "fieldset",
+      "fields": {
+        "nr": {
+          "type": "text",
+          "wrapper": false,
+          "class": "input-width-2",
+          "validation": {
+            "required": true
+          }
+        },
+        "add": {
+          "type": "text",
+          "wrapper": false,
+          "class": "input-width-2"
+        }
+      }
+    }
+  }
+}
