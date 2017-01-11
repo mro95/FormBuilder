@@ -10,10 +10,7 @@
         "nr": {
           "type": "text",
           "wrapper": false,
-          "class": "input-width-2",
-          "validation": {
-            "required": true
-          }
+          "class": "input-width-2"
         },
         "add": {
           "type": "text",

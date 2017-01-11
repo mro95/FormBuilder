@@ -1,5 +1,6 @@
 <?php namespace Mro95\FormBuilder;
 
+use Mro95\FormBuilder\FormElements\Fieldset;
 use Mro95\FormBuilder\FormElements\Text;
 
 class Form
@@ -23,7 +24,16 @@ class Form
     public function addField(string $id, array $field)
     {
         unset($field['validation']);
-        $this->fields[$id] = new Text($id, $field);
+        if ($field['type'] == 'fieldset') {
+            $fieldset = new Fieldset();
+            foreach ($field['fields'] as $subFieldID => $subField) {
+                $text = new Text($subFieldID, $subField);
+                $fieldset->addField($subFieldID, $text);
+            }
+            $this->fields[$id] = $fieldset;
+        } elseif ($field['type'] == 'text') {
+            $this->fields[$id] = new Text($id, $field);
+        }
     }
 
     public function getFields()

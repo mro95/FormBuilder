@@ -1,5 +1,6 @@
 <?php namespace Mro95\FormBuilder\FormElements;
-class FormElement
-{
 
+abstract class FormElement
+{
+    abstract public function toHtml();
 }

@@ -48,6 +48,7 @@ class Text extends FormElement
                 }
             }
         }
+        $properties = trim($properties);
         return "<input {$properties} />";
     }
 }
