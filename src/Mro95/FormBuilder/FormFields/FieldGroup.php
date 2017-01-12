@@ -2,7 +2,18 @@
 
 class FieldGroup implements FieldInterface
 {
+    private $name = '';
+
     private $fields = [];
+
+    public function __construct()
+    {
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
 
     public function addField(string $id, FieldInterface $field)
     {

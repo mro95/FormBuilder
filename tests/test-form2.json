@@ -4,8 +4,8 @@
       "type": "text",
       "name": "firstname"
     },
-    "street-nr": {
-      "type": "fieldset",
+    "street_nr": {
+      "type": "fieldgroup",
       "fields": {
         "nr": {
           "type": "text",
