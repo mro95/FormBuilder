@@ -1,28 +1,26 @@
 <?php namespace Mro95\FormBuilder;
 
-abstract class FormBuilder implements FormBuilderInterface
+use Mro95\FormBuilder\FormFields\FieldInterface;
+
+class FormBuilder
 {
-    /** @var Form */
-    protected $form = null;
+    private $fields = [];
 
-    public function __construct()
+    public function addField(FieldInterface $field)
     {
-        $this->form = new Form();
+        $this->fields[$field->getName()] = $field;
     }
 
-    /**
-     * @return Form
-     */
-    public function getForm(): Form
+    public function build(): Form
     {
-        return $this->form;
+        $form = new Form();
+
+        foreach ($this->fields as $field) {
+            $form->addField($field);
+        }
+
+        return $form;
     }
 
-    /**
-     * @param Form $form
-     */
-    public function setForm($form)
-    {
-        $this->form = $form;
-    }
+
 }

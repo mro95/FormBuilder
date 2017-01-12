@@ -1,7 +1,8 @@
 <?php namespace Mro95\FormBuilder;
 
-use Mro95\FormBuilder\FormElements\Fieldset;
-use Mro95\FormBuilder\FormElements\Text;
+use Mro95\FormBuilder\FormFields\FieldGroup;
+use Mro95\FormBuilder\FormFields\FieldInterface;
+use Mro95\FormBuilder\FormFields\TextField;
 
 class Form
 {
@@ -9,31 +10,17 @@ class Form
 
     private $validation = [];
 
-    private $page = '';
-
-    private $view;
-
     public function __construct()
     {
     }
 
     /**
      * @param string $id
-     * @param array $field
+     * @param FieldInterface $field
      */
-    public function addField(string $id, array $field)
+    public function addField(FieldInterface $field)
     {
-        unset($field['validation']);
-        if ($field['type'] == 'fieldset') {
-            $fieldset = new Fieldset();
-            foreach ($field['fields'] as $subFieldID => $subField) {
-                $text = new Text($subFieldID, $subField);
-                $fieldset->addField($subFieldID, $text);
-            }
-            $this->fields[$id] = $fieldset;
-        } elseif ($field['type'] == 'text') {
-            $this->fields[$id] = new Text($id, $field);
-        }
+        $this->fields[] = $field;
     }
 
     public function getFields()

@@ -1,10 +1,10 @@
-<?php namespace Mro95\FormBuilder\FormElements;
+<?php namespace Mro95\FormBuilder\FormFields;
 
-class Fieldset
+class FieldGroup implements FieldInterface
 {
     private $fields = [];
 
-    public function addField(string $id, FormElement $field)
+    public function addField(string $id, FieldInterface $field)
     {
         $this->fields[$id] = $field;
     }

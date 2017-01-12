@@ -1,15 +1,17 @@
 <?php
 
-use Mro95\FormBuilder\FormDirector;
-use Mro95\FormBuilder\JsonFormBuilder;
+use Mro95\FormBuilder\Form;
+use Mro95\FormBuilder\FormBuilderFactory;
 
-class TestForm extends TestCase
+class TestForm extends PHPUnit_Framework_TestCase
 {
     public function testOne()
     {
-        $builder = new JsonFormBuilder('tests/test-form2.json');
-        $director = new FormDirector();
-        $form = $director->build($builder);
-        var_dump($form->toHtml());
+        $builderFactory = new FormBuilderFactory();
+        $builder = $builderFactory->fromJson('tests/test-form2.json');
+        $form = $builder->build();
+        var_dump($form);
+
+        $this->assertInstanceOf(Form::class, $form);
     }
 }
