@@ -12,6 +12,9 @@
     "php": "^7.0",
     "phpspec/phpspec": "~2.0"
   },
+  "require-dev": {
+    "symfony/var-dumper": "3.2.*"
+  },
   "autoload": {
     "psr-0": {
       "Mro95\\FormBuilder": "src/"
