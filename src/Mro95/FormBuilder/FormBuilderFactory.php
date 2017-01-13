@@ -32,6 +32,7 @@ class FormBuilderFactory
             switch ($fields['type']) {
                 case 'text':
                     $textField = $this->createTextField($fieldFactory, $fieldsId, $fields);
+                    $textField->setWrapper($fields['wrapper'] ?? true);
                     $builder->addField($textField);
                     break;
                 case 'fieldgroup':
