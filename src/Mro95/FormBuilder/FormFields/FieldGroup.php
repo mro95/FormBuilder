@@ -1,5 +1,7 @@
 <?php namespace Mro95\FormBuilder\FormFields;
 
+use Mro95\FormBuilder\View\GenericView;
+
 class FieldGroup implements FieldInterface
 {
     private $name = '';
@@ -15,9 +17,9 @@ class FieldGroup implements FieldInterface
         return $this->name;
     }
 
-    public function addField(string $id, FieldInterface $field)
+    public function addField(FieldInterface $field)
     {
-        $this->fields[$id] = $field;
+        $this->fields[] = $field;
     }
 
     public function toHtml()
@@ -27,6 +29,7 @@ class FieldGroup implements FieldInterface
         foreach ($this->fields as $field) {
             $fieldsHtml .= $field->toHtml();
         }
-        return "<div class='fieldset'>{$fieldsHtml}</div>";
+        $view = GenericView::create('resources/FormFieldTemplates/fieldgroup.php', ['fields' => $fieldsHtml]);
+        return $view->render();
     }
 }

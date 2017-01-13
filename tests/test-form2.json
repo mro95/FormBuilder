@@ -2,19 +2,18 @@
   "data": {
     "first_name": {
       "type": "text",
-      "name": "firstname"
+      "name": "firstname",
+      "required": true
     },
     "street_nr": {
       "type": "fieldgroup",
       "fields": {
         "nr": {
           "type": "text",
-          "wrapper": false,
           "class": "input-width-2"
         },
         "add": {
           "type": "text",
-          "wrapper": false,
           "class": "input-width-2"
         }
       }

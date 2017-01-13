@@ -1,8 +1,6 @@
 <?php namespace Mro95\FormBuilder;
 
-use Mro95\FormBuilder\FormFields\FieldGroup;
 use Mro95\FormBuilder\FormFields\FieldInterface;
-use Mro95\FormBuilder\FormFields\TextField;
 
 class Form
 {

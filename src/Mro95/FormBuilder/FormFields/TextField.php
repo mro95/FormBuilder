@@ -1,5 +1,7 @@
 <?php namespace Mro95\FormBuilder\FormFields;
 
+use Mro95\FormBuilder\View\GenericView;
+
 class TextField implements FieldInterface
 {
     private $id = '';
@@ -171,18 +173,53 @@ class TextField implements FieldInterface
 
     public function toHtml()
     {
-        // TODO: Use ViewInterface
         $properties = '';
-        foreach ($this->properties as $propertyName => $propertyValue) {
-            if (!empty($propertyValue)) {
-                if (is_bool($propertyValue) && $propertyValue === true) {
-                    $properties .= " $propertyName";
-                } else {
-                    $properties .= " $propertyName='$propertyValue'";
-                }
-            }
+
+        //ID
+        if ($this->id !== '') {
+            $properties .= " id='{$this->getId()}'";
         }
+
+        // Name
+        $properties .= " name='{$this->getName()}'";
+
+        // Class
+        if ($this->class !== '') {
+            $properties .= " class='{$this->getClass()}'";
+        }
+
+        // Placeholder
+        if ($this->placeholder !== '') {
+            $properties .= " placeholder='{$this->getPlaceholder()}'";
+        }
+
+        // Value
+        if ($this->value !== '') {
+            $properties .= " value='{$this->getValue()}'";
+        }
+
+        // Required
+        if ($this->isRequired() === true) {
+            $properties .= ' required';
+        }
+
+        // Disabled
+        if ($this->isDisabled() === true) {
+            $properties .= ' disabled';
+        }
+
         $properties = trim($properties);
-        return "<input {$properties} />";
+
+        $fieldsHtml = GenericView::create('resources/FormFieldTemplates/textfield.php', compact('properties'))->render();
+        if ($this->isWrapper()) {
+            $view = GenericView::create(
+                'resources/FormFieldTemplates/fieldgroup.php',
+                ['fields' => $fieldsHtml]
+            )->render();
+        } else {
+            $view = $fieldsHtml;
+        }
+
+        return $view;
     }
 }

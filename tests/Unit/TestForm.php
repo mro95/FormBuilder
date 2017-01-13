@@ -10,7 +10,7 @@ class TestForm extends PHPUnit_Framework_TestCase
         $builderFactory = new FormBuilderFactory();
         $builder = $builderFactory->fromJson('tests/test-form2.json');
         $form = $builder->build();
-        var_dump($form);
+        dump($form->toHtml());
 
         $this->assertInstanceOf(Form::class, $form);
     }
