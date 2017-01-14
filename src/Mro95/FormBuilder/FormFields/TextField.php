@@ -4,24 +4,56 @@ use Mro95\FormBuilder\View\GenericView;
 
 class TextField implements FieldInterface
 {
+    /**
+     * @var string
+     */
     private $id = '';
 
+    /**
+     * @var string
+     */
     private $name = '';
 
+    /**
+     * @var string
+     */
     private $class = '';
 
+    /**
+     * @var string
+     */
     private $placeholder = '';
 
+    /**
+     * @var string
+     */
     private $value = '';
 
+    /**
+     * @var boolean
+     */
     private $required = false;
 
+    /**
+     * @var boolean
+     */
     private $disabled = false;
 
+    /**
+     * @var array
+     */
     private $validation = [];
 
+    /**
+     * @var boolean
+     */
     private $wrapper = true;
 
+    /**
+     * TextField constructor.
+     *
+     * @param string $name
+     */
     public function __construct($name)
     {
         $this->setName($name);
@@ -37,10 +69,14 @@ class TextField implements FieldInterface
 
     /**
      * @param string $id
+     *
+     * @return $this
      */
     public function setId(string $id)
     {
         $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -53,10 +89,14 @@ class TextField implements FieldInterface
 
     /**
      * @param string $name
+     *
+     * @return $this
      */
     public function setName(string $name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -69,10 +109,14 @@ class TextField implements FieldInterface
 
     /**
      * @param string $class
+     *
+     * @return $this
      */
     public function setClass(string $class)
     {
         $this->class = $class;
+
+        return $this
     }
 
     /**
@@ -85,10 +129,14 @@ class TextField implements FieldInterface
 
     /**
      * @param string $placeholder
+     *
+     * @return $this
      */
     public function setPlaceholder(string $placeholder)
     {
         $this->placeholder = $placeholder;
+
+        return $this;
     }
 
     /**
@@ -101,10 +149,14 @@ class TextField implements FieldInterface
 
     /**
      * @param string $value
+     *
+     * @return $this
      */
     public function setValue(string $value)
     {
         $this->value = $value;
+
+        return $this;
     }
 
     /**
@@ -117,10 +169,14 @@ class TextField implements FieldInterface
 
     /**
      * @param bool $required
+     *
+     * @return $this
      */
     public function setRequired(bool $required)
     {
         $this->required = $required;
+
+        return $this;
     }
 
     /**
@@ -133,10 +189,14 @@ class TextField implements FieldInterface
 
     /**
      * @param bool $disabled
+     *
+     * @return $this;
      */
     public function setDisabled(bool $disabled)
     {
         $this->disabled = $disabled;
+
+        return $this;
     }
 
     /**
@@ -149,10 +209,14 @@ class TextField implements FieldInterface
 
     /**
      * @param array $validation
+     *
+     * @return $this
      */
     public function setValidation(array $validation)
     {
         $this->validation = $validation;
+
+        return $this;
     }
 
     /**
@@ -165,50 +229,67 @@ class TextField implements FieldInterface
 
     /**
      * @param bool $wrapper
+     *
+     * @return $this
      */
     public function setWrapper(bool $wrapper)
     {
         $this->wrapper = $wrapper;
+
+        return $this;
     }
 
-    public function toHtml()
+    /**
+     * Get the properties for the field.
+     *
+     * @return array
+     */
+    public function getProperties(): array
     {
-        $properties = '';
+        $properties = [];
 
         //ID
         if ($this->id !== '') {
-            $properties .= " id='{$this->getId()}'";
+            $properties[] = "id='{$this->getId()}'";
         }
 
         // Name
-        $properties .= " name='{$this->getName()}'";
+        $properties[] = "name='{$this->getName()}'";
 
         // Class
         if ($this->class !== '') {
-            $properties .= " class='{$this->getClass()}'";
+            $properties[] = "class='{$this->getClass()}'";
         }
 
         // Placeholder
         if ($this->placeholder !== '') {
-            $properties .= " placeholder='{$this->getPlaceholder()}'";
+            $properties[] = "placeholder='{$this->getPlaceholder()}'";
         }
 
         // Value
         if ($this->value !== '') {
-            $properties .= " value='{$this->getValue()}'";
+            $properties[] = "value='{$this->getValue()}'";
         }
 
         // Required
         if ($this->isRequired() === true) {
-            $properties .= ' required';
+            $properties[] = 'required';
         }
 
         // Disabled
         if ($this->isDisabled() === true) {
-            $properties .= ' disabled';
+            $properties[] = 'disabled';
         }
 
-        $properties = trim($properties);
+        return $properties;
+    }
+
+    /**
+     * @return string
+     */
+    public function toHtml(): string
+    {
+        $properties = implode(' ', $this->getProperties());
 
         $fieldsHtml = GenericView::create('resources/FormFieldTemplates/textfield.php', compact('properties'))->render();
         if ($this->isWrapper()) {

@@ -46,7 +46,7 @@ class GenericView implements ViewInterface
         // Init buffer
         ob_start();
 
-        // Set upbindings
+        // Setup bindings
         extract($this->bindings);
 
         // execute template
