@@ -116,7 +116,7 @@ class TextField implements FieldInterface
     {
         $this->class = $class;
 
-        return $this
+        return $this;
     }
 
     /**
