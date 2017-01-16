@@ -8,12 +8,25 @@ class Form
 
     private $validation = [];
 
-    public function __construct()
+    private $action = '';
+
+    /**
+     * @return string
+     */
+    public function getAction(): string
     {
+        return $this->action;
     }
 
     /**
-     * @param string $id
+     * @param string $action
+     */
+    public function setAction(string $action)
+    {
+        $this->action = $action;
+    }
+
+    /**
      * @param FieldInterface $field
      */
     public function addField(FieldInterface $field)
@@ -32,14 +45,4 @@ class Form
             $this->validation[$id] = $rule;
         }
     }
-
-    public function toHtml()
-    {
-        $out = '';
-        foreach ($this->fields as $field) {
-            $out .= $field->toHtml();
-        }
-        return $out;
-    }
-
 }
