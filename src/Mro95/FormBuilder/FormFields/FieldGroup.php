@@ -22,14 +22,9 @@ class FieldGroup implements FieldInterface
         $this->fields[] = $field;
     }
 
-    public function toHtml()
+    public function getFields()
     {
-        // TODO: Use ViewInterface
-        $fieldsHtml = '';
-        foreach ($this->fields as $field) {
-            $fieldsHtml .= $field->toHtml();
-        }
-        $view = GenericView::create('resources/FormFieldTemplates/fieldgroup.php', ['fields' => $fieldsHtml]);
-        return $view->render();
+        return $this->fields;
     }
+
 }

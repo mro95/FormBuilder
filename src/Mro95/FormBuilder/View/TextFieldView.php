@@ -2,10 +2,21 @@
 
 use Mro95\FormBuilder\FormFields\TextField;
 
+/**
+ * Class TextFieldView
+ * @package Mro95\FormBuilder\View
+ */
 class TextFieldView implements FieldView
 {
+    /**
+     * @var TextField
+     */
     private $field;
 
+    /**
+     * TextFieldView constructor.
+     * @param TextField $textField
+     */
     public function __construct(TextField $textField)
     {
         $this->field = $textField;
