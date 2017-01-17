@@ -63,7 +63,7 @@ class TextFieldView implements FieldView
      */
     public function render()
     {
-        $field = $this->field;
+        $field      = $this->field;
         $properties = join(' ', $this->getProperties());
 
         if ($field->isWrapper()) {
@@ -71,6 +71,5 @@ class TextFieldView implements FieldView
         } else {
             return "<input {$properties} />";
         }
-
     }
 }
