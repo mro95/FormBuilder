@@ -1,10 +1,11 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Mro95\FormBuilder\Form;
 use Mro95\FormBuilder\FormBuilderFactory;
 use Mro95\FormBuilder\View\FormViewBuilder;
 
-class TestForm extends PHPUnit_Framework_TestCase
+class TestForm extends TestCase
 {
     public function testOne()
     {
