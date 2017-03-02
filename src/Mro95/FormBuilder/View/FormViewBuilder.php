@@ -11,6 +11,44 @@ use Mro95\FormBuilder\FormFields\TextField;
  */
 class FormViewBuilder
 {
+    /** @var Form $form */
+    protected $form;
+
+    /** @var string $formView */
+    protected $formView = FormView::class;
+
+    /**
+     * @return Form
+     */
+    public function getForm(): Form
+    {
+        return $this->form;
+    }
+
+    /**
+     * @param Form $form
+     */
+    public function setForm(Form $form)
+    {
+        $this->form = $form;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormView(): string
+    {
+        return $this->formView;
+    }
+
+    /**
+     * @param string $formView
+     */
+    public function setFormView(string $formView)
+    {
+        $this->formView = $formView;
+    }
+
     /**
      * FormViewBuilder constructor.
      * @param Form $form
@@ -25,7 +63,7 @@ class FormViewBuilder
      */
     public function build()
     {
-        $formView = new FormView($this->form);
+        $formView = new $this->formView($this->form);
 
         foreach ($this->form->getFields() as $field) {
             $formView->addField(static::createFieldView($field));
@@ -47,6 +85,6 @@ class FormViewBuilder
             return new FieldGroupView($field);
         }
 
-        throw new \Exception('...');
+        throw new \Exception('Field doesn\'t exists');
     }
 }
