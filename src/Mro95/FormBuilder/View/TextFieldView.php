@@ -11,7 +11,7 @@ class TextFieldView implements FieldView
     /**
      * @var TextField
      */
-    private $field;
+    protected $field;
 
     /**
      * TextFieldView constructor.

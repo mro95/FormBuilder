@@ -4,7 +4,7 @@ use Mro95\FormBuilder\FormFields\FieldGroup;
 
 class FieldGroupView implements FieldView
 {
-    private $fieldGroup;
+    protected $fieldGroup;
 
     public function __construct(FieldGroup $fieldGroup)
     {
