@@ -10,6 +10,43 @@ class FormView
     /** @var FieldView[] $fields */
     protected $fields = [];
 
+    /** @var bool $formWrapper Wrap with html from tag */
+    protected $formWrapper = true;
+
+    /**
+     * FormView constructor.
+     * @param Form $form
+     * @param bool $formWrapper Wrap with html from tag
+     */
+    public function __construct(Form $form, bool $formWrapper = true)
+    {
+        $this->form = $form;
+        $this->formWrapper = $formWrapper;
+    }
+
+    /**
+     * @return string
+     */
+    public function render()
+    {
+        // Init vars
+        $form = $this->form;
+        $html = "";
+
+        // Render all fields
+        foreach ($this->fields as $field) {
+            $html .= $field->render();
+        }
+
+        // Add optional html form tag
+        if ($this->getFormWrapper() === true) {
+            $html = "<form method='post' action='{$form->getAction()}'>\n{$html}\n</form>";
+        }
+
+        // Return the html code
+        return $html;
+    }
+
     /**
      * @return Form
      */
@@ -51,29 +88,18 @@ class FormView
     }
 
     /**
-     * FormView constructor.
-     * @param Form $form
+     * @return bool
      */
-    public function __construct(Form $form)
+    public function getFormWrapper(): bool
     {
-        $this->form = $form;
+        return $this->formWrapper;
     }
 
     /**
-     * @return string
+     * @param bool $formWrapper
      */
-    public function render()
+    public function setFormWrapper(bool $formWrapper)
     {
-        $form = $this->form;
-
-        $html = "<form method='post' action='{$form->getAction()}'>";
-
-        foreach ($this->fields as $field) {
-            $html .= $field->render();
-        }
-
-        $html .= "</form>";
-
-        return $html;
+        $this->formWrapper = $formWrapper;
     }
 }

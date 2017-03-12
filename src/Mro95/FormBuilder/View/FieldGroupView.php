@@ -1,6 +1,7 @@
 <?php namespace Mro95\FormBuilder\View;
 
 use Mro95\FormBuilder\FormFields\FieldGroup;
+use Mro95\FormBuilder\Templater;
 
 class FieldGroupView implements FieldView
 {
@@ -13,11 +14,11 @@ class FieldGroupView implements FieldView
 
     public function render()
     {
-        $output = '<div class="form-group">';
+        $fields = "";
         foreach ($this->fieldGroup->getFields() as $field) {
-            $output .= (new TextFieldView($field))->render();
+            $fields .= (new TextFieldView($field))->render();
         }
-        $output .= '</div>';
+        $output = Templater::render('resources/templates/fieldgroup.php', compact('fields'));
         return $output;
     }
 }

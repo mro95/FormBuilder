@@ -46,7 +46,9 @@ class FormViewBuilder
      */
     public function setFormView(string $formView)
     {
-        $this->formView = $formView;
+        if ($formView instanceof FormView) {
+            $this->formView = $formView;
+        }
     }
 
     /**
@@ -61,9 +63,11 @@ class FormViewBuilder
     /**
      * @return FormView
      */
-    public function build()
+    public function build(bool $formWrapper = true)
     {
+        /** @var FormView $formView */
         $formView = new $this->formView($this->form);
+        $formView->setFormWrapper($formWrapper);
 
         foreach ($this->form->getFields() as $field) {
             $formView->addField(static::createFieldView($field));

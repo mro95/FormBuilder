@@ -2,10 +2,12 @@
   "data": {
     "first_name": {
       "type": "text",
+      "label": "First name",
       "name": "firstname",
       "required": true
     },
     "street_nr": {
+      "label": "Street number",
       "type": "fieldgroup",
       "fields": {
         "nr": {

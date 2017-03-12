@@ -1,6 +1,7 @@
 <?php namespace Mro95\FormBuilder\View;
 
 use Mro95\FormBuilder\FormFields\TextField;
+use Mro95\FormBuilder\Templater;
 
 /**
  * Class TextFieldView
@@ -13,13 +14,20 @@ class TextFieldView implements FieldView
      */
     protected $field;
 
+    /** @var string */
+    protected $path = '';
+
     /**
      * TextFieldView constructor.
      * @param TextField $textField
+     * @param string $path
      */
-    public function __construct(TextField $textField)
-    {
+    public function __construct(
+        TextField $textField,
+        string $path = 'resources/templates/textfield.php'
+    ){
         $this->field = $textField;
+        $this->path = $path;
     }
 
     /**
@@ -77,10 +85,6 @@ class TextFieldView implements FieldView
         $field      = $this->field;
         $properties = join(' ', $this->getProperties());
 
-        if ($field->isWrapper()) {
-            return "<div class='form-group'><input {$properties} /></div>";
-        } else {
-            return "<input {$properties} />";
-        }
+        return Templater::render($this->path, compact('field', 'properties'));
     }
 }

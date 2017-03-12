@@ -1,4 +1,5 @@
 .idea
 composer.phar
+phpunit.phar
 .DS_Store
 /vendor
