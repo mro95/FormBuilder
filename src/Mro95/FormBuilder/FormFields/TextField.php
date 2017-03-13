@@ -4,49 +4,34 @@ use Mro95\FormBuilder\View\GenericView;
 
 class TextField implements FieldInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $id = '';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $name = '';
 
-    /**
-     * @var string
-     */
+    /** @var string */
+    private $label = '';
+
+    /** @var string */
     private $class = '';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $placeholder = '';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $value = '';
 
-    /**
-     * @var boolean
-     */
+    /** @var boolean */
     private $required = false;
 
-    /**
-     * @var boolean
-     */
+    /** @var boolean */
     private $disabled = false;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $validation = [];
 
-    /**
-     * @var boolean
-     */
+    /** @var boolean */
     private $wrapper = true;
 
     /**
@@ -54,8 +39,9 @@ class TextField implements FieldInterface
      *
      * @param string $name
      */
-    public function __construct($name)
+    public function __construct(string $id, string $name)
     {
+        $this->setId($id);
         $this->setName($name);
     }
 
@@ -97,6 +83,22 @@ class TextField implements FieldInterface
         $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLabel(): string
+    {
+        return $this->label;
+    }
+
+    /**
+     * @param string $label
+     */
+    public function setLabel(string $label)
+    {
+        $this->label = $label;
     }
 
     /**

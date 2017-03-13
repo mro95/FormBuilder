@@ -84,7 +84,8 @@ class TextFieldView implements FieldView
     {
         $field      = $this->field;
         $properties = join(' ', $this->getProperties());
+        $label      = $field->getLabel();
 
-        return Templater::render($this->path, compact('field', 'properties'));
+        return Templater::render($this->path, compact('field', 'properties', 'label'));
     }
 }

@@ -10,7 +10,9 @@ class FormBuilderFactory
     private function createTextField(FieldFactory $fieldFactory, string $fieldId, array $field)
     {
         $textField = $fieldFactory->createTextField(
+            $fieldId,
             $field['name'] ?? $fieldId,
+            $field['label'] ?? '',
             $field['class'] ?? '',
             $field['required'] ?? false
         );
@@ -37,6 +39,7 @@ class FormBuilderFactory
                     break;
                 case 'fieldgroup':
                     $fieldGroup = new FieldGroup();
+                    $fieldGroup->setLabel($fields['label'] ?? '');
                     foreach($fields['fields'] as $fieldId => $field) {
                         $textField = $this->createTextField($fieldFactory, $fieldId, $field);
                         $textField->setWrapper(false);
