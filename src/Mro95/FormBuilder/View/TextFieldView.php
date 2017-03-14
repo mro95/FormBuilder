@@ -15,19 +15,23 @@ class TextFieldView implements FieldView
     protected $field;
 
     /** @var string */
-    protected $path = '';
+    protected $templatePath = '';
 
     /**
      * TextFieldView constructor.
      * @param TextField $textField
-     * @param string $path
+     * @param string $templatePath
      */
     public function __construct(
         TextField $textField,
-        string $path = 'resources/templates/textfield.php'
+        string $templatePath = ''
     ){
+        if($templatePath == '') {
+            $basedir = __DIR__ . "/../../../../";
+            $templatePath = $basedir . "resources/templates/textfield.php";
+        }
         $this->field = $textField;
-        $this->path = $path;
+        $this->templatePath = $templatePath;
     }
 
     /**
@@ -86,6 +90,6 @@ class TextFieldView implements FieldView
         $properties = join(' ', $this->getProperties());
         $label      = $field->getLabel();
 
-        return Templater::render($this->path, compact('field', 'properties', 'label'));
+        return Templater::render($this->templatePath, compact('field', 'properties', 'label'));
     }
 }

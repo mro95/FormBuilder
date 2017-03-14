@@ -9,9 +9,16 @@ class FieldGroupView implements FieldView
 
     protected $textFieldView = TextFieldView::class;
 
-    public function __construct(FieldGroup $fieldGroup)
+    protected $templatePath = '';
+
+    public function __construct(FieldGroup $fieldGroup, string $templatePath = '')
     {
+        if($templatePath == '') {
+            $basedir = __DIR__ . "/../../../../";
+            $templatePath = $basedir . "resources/templates/fieldgroup.php";
+        }
         $this->fieldGroup = $fieldGroup;
+        $this->templatePath = $templatePath;
     }
 
     public function render()
@@ -19,7 +26,7 @@ class FieldGroupView implements FieldView
         $label = $this->fieldGroup->getLabel();
         $fields = $this->fieldGroup->getFields();
         $textFieldView = $this->textFieldView;
-        $output = Templater::render('resources/templates/fieldgroup.php', compact('fields', 'label', 'textFieldView'));
+        $output = Templater::render($this->templatePath, compact('fields', 'label', 'textFieldView'));
         return $output;
     }
 }
