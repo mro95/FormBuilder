@@ -15,23 +15,31 @@ class TextFieldView implements FieldView
     protected $field;
 
     /** @var string */
-    protected $templatePath = '';
+    protected static $templatePath = '';
 
     /**
      * TextFieldView constructor.
      * @param TextField $textField
-     * @param string $templatePath
      */
-    public function __construct(
-        TextField $textField,
-        string $templatePath = ''
-    ){
-        if($templatePath == '') {
+    public function __construct(TextField $textField)
+    {
+        if(self::getTemplatePath() == '') {
             $basedir = __DIR__ . "/../../../../";
-            $templatePath = $basedir . "resources/templates/textfield.php";
+            self::setTemplatePath($basedir . "resources/templates/textfield.php");
         }
         $this->field = $textField;
-        $this->templatePath = $templatePath;
+    }
+
+    /**
+     * @return string
+     */
+    public function render()
+    {
+        $field      = $this->field;
+        $properties = join(' ', $this->getProperties());
+        $label      = $field->getLabel();
+
+        return Templater::render(self::getTemplatePath(), compact('field', 'properties', 'label'));
     }
 
     /**
@@ -86,12 +94,16 @@ class TextFieldView implements FieldView
     /**
      * @return string
      */
-    public function render()
+    public static function getTemplatePath(): string
     {
-        $field      = $this->field;
-        $properties = join(' ', $this->getProperties());
-        $label      = $field->getLabel();
+        return self::$templatePath;
+    }
 
-        return Templater::render($this->templatePath, compact('field', 'properties', 'label'));
+    /**
+     * @param string $templatePath
+     */
+    public static function setTemplatePath(string $templatePath)
+    {
+        self::$templatePath = $templatePath;
     }
 }

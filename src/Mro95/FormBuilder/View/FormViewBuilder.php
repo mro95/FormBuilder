@@ -17,12 +17,6 @@ class FormViewBuilder
     /** @var string $formView */
     protected $formView = FormView::class;
 
-    /** @var string */
-    protected $templateTextField = '';
-
-    /** @var string */
-    protected $templateFieldGroup = '';
-
     /**
      * FormViewBuilder constructor.
      * @param Form $form
@@ -42,9 +36,7 @@ class FormViewBuilder
         $formView->setFormWrapper($formWrapper);
 
         foreach ($this->form->getFields() as $field) {
-            $formView->addField(
-                static::createFieldView($field, $this->getTemplateTextField(), $this->getTemplateFieldGroup())
-            );
+            $formView->addField( static::createFieldView($field) );
         }
 
         return $formView;
@@ -55,15 +47,12 @@ class FormViewBuilder
      * @return FieldView
      * @throws \Exception
      */
-    private static function createFieldView(
-        FieldInterface $field,
-        string $templateTextField = '',
-        string $templateFieldGroup = ''
-    ){
+    private static function createFieldView(FieldInterface $field)
+    {
         if ($field instanceof TextField) {
-            return new TextFieldView($field, $templateTextField);
+            return new TextFieldView($field);
         } elseif ($field instanceof FieldGroup) {
-            return new FieldGroupView($field, $templateFieldGroup);
+            return new FieldGroupView($field);
         }
 
         throw new \Exception('Field doesn\'t exists');
@@ -101,37 +90,5 @@ class FormViewBuilder
         if ($formView instanceof FormView) {
             $this->formView = $formView;
         }
-    }
-
-    /**
-     * @return string
-     */
-    public function getTemplateTextField(): string
-    {
-        return $this->templateTextField;
-    }
-
-    /**
-     * @param string $templateTextField
-     */
-    public function setTemplateTextField(string $templateTextField)
-    {
-        $this->templateTextField = $templateTextField;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTemplateFieldGroup(): string
-    {
-        return $this->templateFieldGroup;
-    }
-
-    /**
-     * @param string $templateFieldGroup
-     */
-    public function setTemplateFieldGroup(string $templateFieldGroup)
-    {
-        $this->templateFieldGroup = $templateFieldGroup;
     }
 }
