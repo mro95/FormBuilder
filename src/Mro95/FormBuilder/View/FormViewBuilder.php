@@ -17,6 +17,58 @@ class FormViewBuilder
     /** @var string $formView */
     protected $formView = FormView::class;
 
+    /** @var string */
+    protected $templateTextField = '';
+
+    /** @var string */
+    protected $templateFieldGroup = '';
+
+    /**
+     * FormViewBuilder constructor.
+     * @param Form $form
+     */
+    public function __construct(Form $form)
+    {
+        $this->form = $form;
+    }
+
+    /**
+     * @return FormView
+     */
+    public function build(bool $formWrapper = true)
+    {
+        /** @var FormView $formView */
+        $formView = new $this->formView($this->form);
+        $formView->setFormWrapper($formWrapper);
+
+        foreach ($this->form->getFields() as $field) {
+            $formView->addField(
+                static::createFieldView($field, $this->getTemplateTextField(), $this->getTemplateFieldGroup())
+            );
+        }
+
+        return $formView;
+    }
+
+    /**
+     * @param FieldInterface $field
+     * @return FieldView
+     * @throws \Exception
+     */
+    private static function createFieldView(
+        FieldInterface $field,
+        string $templateTextField = '',
+        string $templateFieldGroup = ''
+    ){
+        if ($field instanceof TextField) {
+            return new TextFieldView($field, $templateTextField);
+        } elseif ($field instanceof FieldGroup) {
+            return new FieldGroupView($field, $templateFieldGroup);
+        }
+
+        throw new \Exception('Field doesn\'t exists');
+    }
+
     /**
      * @return Form
      */
@@ -52,43 +104,34 @@ class FormViewBuilder
     }
 
     /**
-     * FormViewBuilder constructor.
-     * @param Form $form
+     * @return string
      */
-    public function __construct(Form $form)
+    public function getTemplateTextField(): string
     {
-        $this->form = $form;
+        return $this->templateTextField;
     }
 
     /**
-     * @return FormView
+     * @param string $templateTextField
      */
-    public function build(bool $formWrapper = true)
+    public function setTemplateTextField(string $templateTextField)
     {
-        /** @var FormView $formView */
-        $formView = new $this->formView($this->form);
-        $formView->setFormWrapper($formWrapper);
-
-        foreach ($this->form->getFields() as $field) {
-            $formView->addField(static::createFieldView($field));
-        }
-
-        return $formView;
+        $this->templateTextField = $templateTextField;
     }
 
     /**
-     * @param FieldInterface $field
-     * @return FieldView
-     * @throws \Exception
+     * @return string
      */
-    private static function createFieldView(FieldInterface $field)
+    public function getTemplateFieldGroup(): string
     {
-        if ($field instanceof TextField) {
-            return new TextFieldView($field);
-        } elseif ($field instanceof FieldGroup) {
-            return new FieldGroupView($field);
-        }
+        return $this->templateFieldGroup;
+    }
 
-        throw new \Exception('Field doesn\'t exists');
+    /**
+     * @param string $templateFieldGroup
+     */
+    public function setTemplateFieldGroup(string $templateFieldGroup)
+    {
+        $this->templateFieldGroup = $templateFieldGroup;
     }
 }
