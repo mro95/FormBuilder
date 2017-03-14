@@ -45,6 +45,8 @@ class TextFieldView implements FieldView
 
         $properties = [];
 
+        $properties[] = 'type="text"';
+
         //ID
         if ($field->getId() !== '') {
             $properties[] = "id='{$field->getId()}'";
